@@ -2,9 +2,9 @@ import os
 import numpy as np
 from PIL import Image
 import pickle
-import sys
-sys.path.append('..\\src')
-from utils import forward_prop
+
+# Use package-style imports and robust paths to models
+from src.utils import forward_prop
 
 def process_image(image_path, mean, std):
     """
