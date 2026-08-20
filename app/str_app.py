@@ -25,7 +25,7 @@ if uploaded_file is not None:
         f.write(uploaded_file.getbuffer())
 
     with st.spinner("Classifying..."):
-        result = predict("temp_upload.jpg")
+        result = predict(os.path.abspath("temp_upload.jpg"))
 
     label = result["Label"]
     confidence = result["Confidence"]
