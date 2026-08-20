@@ -46,7 +46,7 @@ def predict(image_path):
     X = process_image(image_path, mean, std)
 
     AL, _ = forward_prop(X, parameters)
-    probability = float(AL)
+    probability = float(np.asarray(AL).squeeze())
 
     if probability > 0.5:
         label = 'Broiler'
