@@ -1,4 +1,7 @@
 import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+params_path = os.path.join(current_dir, "..", "models", "parameters.pkl")
+stats_path = os.path.join(current_dir, "..", "models", "train_stats.pkl")
 import numpy as np
 from PIL import Image
 import pickle
@@ -27,9 +30,9 @@ def predict(image_path):
     """
     This function takes the path of an image as input and returns a prediction about that image.
     """
-    with open('..\\models\\parameters.pkl', 'rb') as f:
+    with open(params_path, 'rb') as f:
         parameters = pickle.load(f)
-    with open('..\\models\\train_stats.pkl', 'rb') as f:
+    with open(stats_path, 'rb') as f:
         train_stats = pickle.load(f)
 
     mean = train_stats['mean']
