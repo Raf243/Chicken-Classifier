@@ -1,8 +1,13 @@
 import streamlit as st
 from PIL import Image
 import sys
-sys.path.append("../src")
+import os
+ 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.join(current_dir, '..', 'src')
+sys.path.append(src_path)
 from predict import predict
+
 
 st.set_page_config(page_title="Chicken Breed Classifier", page_icon="🐔")
 
