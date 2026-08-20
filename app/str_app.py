@@ -21,11 +21,13 @@ if uploaded_file is not None:
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
     # Save uploaded file temporarily since predict() expects a file path
-    with open("temp_upload.jpg", "wb") as f:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    temp_file_path = os.path.join(current_dir, "temp_upload.jpg")
+    with open(temp_file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
 
     with st.spinner("Classifying..."):
-        result = predict(os.path.abspath("temp_upload.jpg"))
+        result = predict(os.path.abspath(temp_file_path))
 
     label = result["Label"]
     confidence = result["Confidence"]
