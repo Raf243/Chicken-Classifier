@@ -2,6 +2,13 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 params_path = os.path.join(current_dir, "..", "models", "parameters.pkl")
 stats_path = os.path.join(current_dir, "..", "models", "train_stats.pkl")
+
+if not os.path.exists(params_path):
+    raise FileNotFoundError(f"Model file not found: {params_path}")
+
+if not os.path.exists(stats_path):
+    raise FileNotFoundError(f"Stats file not found: {stats_path}")
+
 import numpy as np
 from PIL import Image
 import pickle
