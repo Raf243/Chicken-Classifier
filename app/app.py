@@ -1,34 +1,33 @@
 import gradio as gr
-from src.predict import predict
-from PIL import Image
-import os
+import sys
+sys.path.append("../src")
+from predict import predict
 
+def classify_image(image_path):
+    # Get the prediction
+    result = predict(image_path)
 
-def predict_image(image: Image.Image):
-    temp_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results'))
-    os.makedirs(temp_dir, exist_ok=True)
-    temp_path = os.path.join(temp_dir, "temp_upload.jpg")
-    image.save(temp_path)
-    result = predict(temp_path)
-    # Return label and raw probability/confidence
-    return result['Label'], result['Probability'], result['Confidence']
+    # Formal for the output
+    probability = result['Probability']
+    label = result["Label"]
+    confidence = result["Confidence"]
 
+    labels = {
+        "Local Breed": round(1-probability, 4),
+        "Broiler": round(probability, 4)
+    }
+    summary = f"Predicted  Breed: {label}\nConfidence: {confidence}"
 
-def main():
-    title = "Chicken Type Classifier"
-    description = "Upload a hen image to predict probability of being Local or Broiler."
+    return labels, summary
 
-    iface = gr.Interface(
-        fn=predict_image,
-        inputs=gr.Image(type="pil", label="Upload Hen Image"),
-        outputs=[gr.Label(num_top_classes=2, label="Predicted Label"), gr.Number(label="Probability"), gr.Number(label="Confidence (%)")],
-        title=title,
-        description=description,
-        allow_flagging="never",
-    )
+app = gr.Interface(
+    fn = classify_image,
+    inputs= gr.Image(type="filepath", label="Upload Chicken Photo"),
+    outputs= [
+        gr.Label(label= "Breed Prediction"),
+        gr.Text(label= "Detailed Summary")],
+    title= "Chicken Breed Classifier",
+    description= "Upload a photo of a chicken to classify it as a Local Breed or a Broiler"
+)
 
-    iface.launch()
-
-
-if __name__ == '__main__':
-    main()
+app.launch()

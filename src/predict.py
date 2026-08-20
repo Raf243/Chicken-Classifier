@@ -4,7 +4,7 @@ from PIL import Image
 import pickle
 
 # Use package-style imports and robust paths to models
-from src.utils import forward_prop
+from utils import forward_prop
 
 def process_image(image_path, mean, std):
     """
