@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import sys
 import os
- 
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, '..', 'src')
 sys.path.append(src_path)
@@ -18,7 +18,7 @@ uploaded_file = st.file_uploader("Upload Chicken Photo", type=["jpg", "jpeg", "p
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", use_container_width=True)
 
     # Save uploaded file temporarily since predict() expects a file path
     with open("temp_upload.jpg", "wb") as f:
